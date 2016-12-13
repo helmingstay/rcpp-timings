@@ -51,16 +51,20 @@ set.seed(31)
 mat1 <- matrix(rnorm(ncol1*nvar), ncol = ncol1)
 mat2 <- matrix(rnorm(ncol2*nvar), ncol = ncol2)
 
-testdist(mat1, mat2, what = "C")
-testdist(mat1, mat2, what = "Call")
-testdist(mat1, mat2, what = "Cpp")
+mat1[1,1] <- Inf
+## testdist(mat1, mat2, what = "C")
+res.call <- testdist(mat1, mat2, what = "Call")
+res.cpp <- testdist(mat1, mat2, what = "Cpp")
+if(!identical(res.call, res.cpp)) {
+    stop('Test results difference')
+}
 
 require(microbenchmark)
 tm <- microbenchmark(
-  testdist(mat1, mat2, what = "C"),
+  #testdist(mat1, mat2, what = "C"),
   testdist(mat1, mat2, what = "Call"),
   testdist(mat1, mat2, what = "Cpp"),
-  times = 100L)
+  times = 10L)
 
 require(ggplot2)
 png("benchmark.png")

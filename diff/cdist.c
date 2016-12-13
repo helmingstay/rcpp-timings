@@ -23,10 +23,10 @@ void CDist(double *data,
     for (j = 0; j < numCodes; j++) {
       dist = 0;
       for (k = 0; k < numVars; k++) {
-        if (!ISNAN(data[i * numVars + k])) {
+        //if (!ISNAN(data[i * numVars + k])) {
           tmp = data[i * numVars + k] - codes[j * numVars + k];
           dist += tmp * tmp;
-        }
+        //}
       }
       if (dist < *mindist) {
         *mindist = dist;

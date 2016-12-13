@@ -3,8 +3,8 @@
 using namespace Rcpp;
  
 // [[Rcpp::export]]
-double RcppDist(NumericMatrix sData1,
-        NumericMatrix sData2,
+double RcppDist(NumericMatrix data,
+        NumericMatrix codes,
         int numObjects,
         int numVars,
         int numCodes   
@@ -13,9 +13,9 @@ double RcppDist(NumericMatrix sData1,
     i, j, k;
   
   double
-    dist, tmp, mindist,
-    *data = REAL(sData1),
-    *codes = REAL(sData2);
+    dist, tmp, mindist; 
+    //*data = REAL(sData1),
+    //*codes = REAL(sData2);
   
   mindist = 10000.0;
   
@@ -23,10 +23,10 @@ double RcppDist(NumericMatrix sData1,
     for (j = 0; j < numCodes; j++) {
       dist = 0;
       for (k = 0; k < numVars; k++) {
-        if (!ISNAN(data[i * numVars + k])) {
+        //if (!ISNAN(data[i * numVars + k])) {
           tmp = data[i * numVars + k] - codes[j * numVars + k];
           dist += tmp * tmp;
-        }
+        //}
       }
       if (dist < mindist) {
         mindist = dist;
