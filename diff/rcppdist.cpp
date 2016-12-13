@@ -18,12 +18,16 @@ double RcppDist(NumericMatrix data,
     //*codes = REAL(sData2);
   
   mindist = 10000.0;
+  NumericVector dat;
   
   for (i = 0; i < numObjects; i++) {
+    if(any(is_nan(data(_,i)))) {
+      continue;
+    }
     for (j = 0; j < numCodes; j++) {
       dist = 0;
       for (k = 0; k < numVars; k++) {
-        //if (!ISNAN(data[i * numVars + k])) {
+        //if (!Rcpp::is_nan()) {
           tmp = data[i * numVars + k] - codes[j * numVars + k];
           dist += tmp * tmp;
         //}

@@ -51,29 +51,31 @@ set.seed(31)
 mat1 <- matrix(rnorm(ncol1*nvar), ncol = ncol1)
 mat2 <- matrix(rnorm(ncol2*nvar), ncol = ncol2)
 
-mat1[1,1] <- Inf
-## testdist(mat1, mat2, what = "C")
+mat1[1,1:(ncol1-10)] <- Inf
+#testdist(mat1, mat2, what = "C")
+##
 res.call <- testdist(mat1, mat2, what = "Call")
 res.cpp <- testdist(mat1, mat2, what = "Cpp")
 if(!identical(res.call, res.cpp)) {
     stop('Test results difference')
 }
 
+set.seed(33)
+niter <- 20L
+ncols1 <- 100 * c(1, 2, 4, 8, 16, 32)
+
 require(microbenchmark)
 tm <- microbenchmark(
   #testdist(mat1, mat2, what = "C"),
   testdist(mat1, mat2, what = "Call"),
   testdist(mat1, mat2, what = "Cpp"),
-  times = 10L)
+  times = niter)
 
 require(ggplot2)
 png("benchmark.png")
 print(autoplot(tm))
 dev.off()
 
-set.seed(33)
-niter <- 100L
-ncols1 <- 100 * c(1, 2, 4, 8, 16, 32)
 tms <- lapply(ncols1,
               function(ncol1) {
                 mat1 <- matrix(rnorm(ncol1*nvar), ncol = ncol1)
