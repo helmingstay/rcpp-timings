@@ -92,3 +92,6 @@ p <- xyplot(time ~ ncols, groups = expr, data = tms.df, type = c("p", "a"),
        xlab="Number of columns in mat1", auto.key = TRUE)
 print(p)
 dev.off()
+
+
+print(tm)
