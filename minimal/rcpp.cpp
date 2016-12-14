@@ -11,13 +11,14 @@ inline bool isnan_macro(double x) {
     return ISNAN(x);
 }
 
+inline bool isnan_expr(double x) {
+    // R-core macro
+    return isnan(x)!=0;
+}
+
 inline bool isnan_11(double x) {
     // different behavior from ISNAN
     return std::isnan(x);
-}
-
-inline bool isnan_expr(double x) {
-    return isnan(x)!=0;
 }
 
 // [[Rcpp::export]]
@@ -46,7 +47,7 @@ void CountNans_fn(NumericVector x) {
 void CountNans_expr(NumericVector x) {
   int nanCount = 0;
   for (double xx : x) {
-    if (isnan(xx)!=0) {
+    if (isnan_expr(xx)) {
       nanCount++;
     }
   }
