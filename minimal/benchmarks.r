@@ -13,8 +13,8 @@ n <- as.integer(100000)
 x <- rnorm(n)
 mb <- microbenchmark(
   macro <- CountNans_macro(x),
-  expr <- CountNans_expr(x),
   fn <- CountNans_fn(x),
+  expr <- CountNans_expr(x),
   sug <- CountNans_sug(x),
   std_macro <- CountNans_std_macro(x),
   std_expr <- CountNans_std_expr(x),
