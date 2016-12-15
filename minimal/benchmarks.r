@@ -11,8 +11,8 @@ dyn.load(paste("call", .Platform$dynlib.ext, sep=""))
 
 n <- as.integer(100000)
 x <- rnorm(n)
-x[1:100] <- Inf
-x[1:1000] <- NA
+x[1:100] <- NaN
+x[101:120] <- NA
 mb <- microbenchmark(
   macro <- CountNans_macro(x),
   fn <- CountNans_fn(x),
@@ -22,7 +22,7 @@ mb <- microbenchmark(
   std_expr <- CountNans_std_expr(x),
   std_11 <- CountNans_std_11(x),
   call <- .Call("CountNans", x, n),
-  times = 10000
+  times = 1000
 )
 
 library(ggplot2)
